@@ -37,8 +37,8 @@ The form has 4 steps and a thank-you screen: personal info, plan selection, add-
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/Zikra-S/YOUR-REPO-NAME.git
-cd YOUR-REPO-NAME
+git clone https://github.com/Zikra-S/Multi-step-form.git
+cd Multi-step-form
 pnpm install
 pnpm dev
 ```
@@ -51,7 +51,7 @@ The app will be available at `http://localhost:5173`.
 src/
 ├── assets/images/     # Sidebar backgrounds and icons
 ├── components/
-│   ├── sidebar.tsx        # Step numbers and background
+│   ├── sideBar.tsx        # Step numbers and background
 │   ├── stepOne.tsx        # Personal info form with validation
 │   ├── stepTwo.tsx        # Plan cards and billing switch
 │   ├── stepThree.tsx      # Add-ons with custom checkboxes
