@@ -15,6 +15,7 @@ type FormState = {
   errors: Errors;
   plan: string;
   yearly: boolean;
+  addOns: string[];
 };
 
 type Action =
@@ -23,7 +24,8 @@ type Action =
   | { type: "SET_PLAN"; plan: string }
   | { type: "TOGGLE_YEARLY" }
   | { type: "NEXT_STEP" }
-  | { type: "PREV_STEP" };
+  | { type: "PREV_STEP" }
+  | { type: "TOGGLE_ADDON"; id: string };
 
 const initialState: FormState = {
   step: 1,
@@ -33,6 +35,7 @@ const initialState: FormState = {
   errors: { name: "", email: "", phone: "" },
   plan: "arcade",
   yearly: false,
+  addOns: [],
 };
 
 function reducer(state: FormState, action: Action): FormState {
@@ -45,6 +48,11 @@ function reducer(state: FormState, action: Action): FormState {
       return { ...state, plan: action.plan };
     case "TOGGLE_YEARLY":
       return { ...state, yearly: !state.yearly };
+    case "TOGGLE_ADDON":
+      return {
+        ...state,
+        addOns: state.addOns.includes(action.id) ? state.addOns.filter((id) => id !== action.id) : [...state.addOns, action.id],
+      };
     case "NEXT_STEP":
       return { ...state, step: state.step + 1 };
     case "PREV_STEP":

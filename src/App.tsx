@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { FormContext } from "./context/formContext";
 import StepOne from "./components/stepOne";
 import StepTwo from "./components/stepTwo";
+import StepThree from "./components/stepThree";
 
 function App() {
   const { state, dispatch } = useContext(FormContext);
@@ -11,9 +12,11 @@ function App() {
       {state.step === 1 && <StepOne />}
       {state.step === 2 && <StepTwo />}
 
-      {state.step === 3 && (
+      {state.step === 3 && <StepThree />}
+
+      {state.step === 4 && (
         <div className="p-6">
-          <p>Step 3 is coming soon 🚧</p>
+          <p>Step 4 is coming soon 🚧</p>
           <button onClick={() => dispatch({ type: "PREV_STEP" })}>Back</button>
         </div>
       )}
