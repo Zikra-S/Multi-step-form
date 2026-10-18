@@ -1,21 +1,40 @@
 import { createContext, useReducer } from "react";
 import type { ReactNode, Dispatch } from "react";
 
-type FormState = {
-  step: number;
+export type Errors = {
   name: string;
   email: string;
   phone: string;
 };
 
-type Action = { type: "SET_FIELD"; field: "name" | "email" | "phone"; value: string } | { type: "NEXT_STEP" } | { type: "PREV_STEP" };
+type FormState = {
+  step: number;
+  name: string;
+  email: string;
+  phone: string;
+  errors: Errors;
+};
 
-const initialState: FormState = { step: 1, name: "", email: "", phone: "" };
+type Action =
+  | { type: "SET_FIELD"; field: "name" | "email" | "phone"; value: string }
+  | { type: "SET_ERRORS"; errors: Errors }
+  | { type: "NEXT_STEP" }
+  | { type: "PREV_STEP" };
+
+const initialState: FormState = {
+  step: 1,
+  name: "",
+  email: "",
+  phone: "",
+  errors: { name: "", email: "", phone: "" },
+};
 
 function reducer(state: FormState, action: Action): FormState {
   switch (action.type) {
     case "SET_FIELD":
       return { ...state, [action.field]: action.value };
+    case "SET_ERRORS":
+      return { ...state, errors: action.errors };
     case "NEXT_STEP":
       return { ...state, step: state.step + 1 };
     case "PREV_STEP":
