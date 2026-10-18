@@ -1,0 +1,42 @@
+import { createContext, useReducer } from "react";
+import type { ReactNode, Dispatch } from "react";
+
+type FormState = {
+  step: number;
+  name: string;
+  email: string;
+  phone: string;
+};
+
+type Action = { type: "SET_FIELD"; field: "name" | "email" | "phone"; value: string } | { type: "NEXT_STEP" } | { type: "PREV_STEP" };
+
+const initialState: FormState = { step: 1, name: "", email: "", phone: "" };
+
+function reducer(state: FormState, action: Action): FormState {
+  switch (action.type) {
+    case "SET_FIELD":
+      return { ...state, [action.field]: action.value };
+    case "NEXT_STEP":
+      return { ...state, step: state.step + 1 };
+    case "PREV_STEP":
+      return { ...state, step: state.step - 1 };
+    default:
+      return state;
+  }
+}
+
+type FormContextType = {
+  state: FormState;
+  dispatch: Dispatch<Action>;
+};
+
+export const FormContext = createContext<FormContextType>({
+  state: initialState,
+  dispatch: () => {},
+});
+
+export function FormProvider({ children }: { children: ReactNode }) {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  return <FormContext.Provider value={{ state, dispatch }}>{children}</FormContext.Provider>;
+}
