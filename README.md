@@ -1,75 +1,68 @@
-# React + TypeScript + Vite
+# Multi-Step Form
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive multi-step subscription form, built as a solution to a [Frontend Mentor](https://www.frontendmentor.io/challenges/multistep-form-YVAnSdqQBJ) challenge. You fill in your info, pick a plan, choose add-ons, and confirm your order. All the form data is managed with Context API and useReducer.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The form has 4 steps and a thank-you screen: personal info, plan selection, add-ons, and a summary. A sidebar shows which step you are on. The layout changes between mobile and desktop screen sizes, and every link and button has a hover state.
 
-## React Compiler
+## Preview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+![Multi-step form preview](./Preview.png)
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Responsive layout for mobile and desktop screens
+- Step 1 validation: required fields and an email check, with error messages
+- Plan selection with a monthly and yearly billing switch
+- Yearly prices with "2 months free"
+- Add-ons with custom checkboxes that work with the keyboard
+- Summary with a "Change" link that jumps back to the plan step
+- Total price calculated from the plan and the selected add-ons
+- Answers are kept when you move back and forth between steps
+- Fixed button bar at the bottom of the screen on mobile
+- Hover states on all links and buttons
+- Custom colors and font set up in the Tailwind theme
+- Built with strict TypeScript typing throughout
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Vite](https://vitejs.dev/)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Getting Started
 
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/Zikra-S/YOUR-REPO-NAME.git
+cd YOUR-REPO-NAME
+pnpm install
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+The app will be available at `http://localhost:5173`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Project Structure
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```
+src/
+├── assets/images/     # Sidebar backgrounds and icons
+├── components/
+│   ├── sidebar.tsx        # Step numbers and background
+│   ├── stepOne.tsx        # Personal info form with validation
+│   ├── stepTwo.tsx        # Plan cards and billing switch
+│   ├── stepThree.tsx      # Add-ons with custom checkboxes
+│   ├── stepFour.tsx       # Summary and total price
+│   └── stepFive.tsx       # Thank you screen
+├── context/
+│   └── formContext.tsx    # Form state, reducer, and provider
+├── data/
+│   ├── plans.ts           # List of plans and their prices
+│   └── addOns.ts          # List of add-ons and their prices
+├── App.tsx            # Puts the sidebar and the steps together
+├── index.css          # Tailwind import, theme colors, and font
+└── main.tsx           # App entry point
 ```
