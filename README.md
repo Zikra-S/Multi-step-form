@@ -6,10 +6,6 @@ A responsive multi-step subscription form, built as a solution to a [Frontend Me
 
 The form has 4 steps and a thank-you screen: personal info, plan selection, add-ons, and a summary. A sidebar shows which step you are on. The layout changes between mobile and desktop screen sizes, and every link and button has a hover state.
 
-## Preview
-
-![Multi-step form preview](./Preview.png)
-
 ## Features
 
 - Responsive layout for mobile and desktop screens
