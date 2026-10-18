@@ -10,7 +10,7 @@ function Sidebar() {
   const activeStep = Math.min(state.step, 4);
 
   return (
-    <aside className="relative h-[172px] overflow-hidden md:h-[568px] md:w-[274px] md:shrink-0 md:rounded-lg">
+    <aside className="relative h-43 overflow-hidden md:h-142 md:w-68.5 md:shrink-0 md:rounded-lg">
       <img src={sidebarMobile} alt="" className="absolute inset-0 size-full object-cover md:hidden" />
       <img src={sidebarDesktop} alt="" className="absolute inset-0 hidden size-full object-cover md:block" />
 
