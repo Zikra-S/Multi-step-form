@@ -23,9 +23,10 @@ type Action =
   | { type: "SET_ERRORS"; errors: Errors }
   | { type: "SET_PLAN"; plan: string }
   | { type: "TOGGLE_YEARLY" }
+  | { type: "TOGGLE_ADDON"; id: string }
+  | { type: "GO_TO_STEP"; step: number }
   | { type: "NEXT_STEP" }
-  | { type: "PREV_STEP" }
-  | { type: "TOGGLE_ADDON"; id: string };
+  | { type: "PREV_STEP" };
 
 const initialState: FormState = {
   step: 1,
@@ -53,6 +54,8 @@ function reducer(state: FormState, action: Action): FormState {
         ...state,
         addOns: state.addOns.includes(action.id) ? state.addOns.filter((id) => id !== action.id) : [...state.addOns, action.id],
       };
+          case "GO_TO_STEP":
+      return { ...state, step: action.step };
     case "NEXT_STEP":
       return { ...state, step: state.step + 1 };
     case "PREV_STEP":
