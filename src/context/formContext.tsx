@@ -13,11 +13,15 @@ type FormState = {
   email: string;
   phone: string;
   errors: Errors;
+  plan: string;
+  yearly: boolean;
 };
 
 type Action =
   | { type: "SET_FIELD"; field: "name" | "email" | "phone"; value: string }
   | { type: "SET_ERRORS"; errors: Errors }
+  | { type: "SET_PLAN"; plan: string }
+  | { type: "TOGGLE_YEARLY" }
   | { type: "NEXT_STEP" }
   | { type: "PREV_STEP" };
 
@@ -27,6 +31,8 @@ const initialState: FormState = {
   email: "",
   phone: "",
   errors: { name: "", email: "", phone: "" },
+  plan: "arcade",
+  yearly: false,
 };
 
 function reducer(state: FormState, action: Action): FormState {
@@ -35,6 +41,10 @@ function reducer(state: FormState, action: Action): FormState {
       return { ...state, [action.field]: action.value };
     case "SET_ERRORS":
       return { ...state, errors: action.errors };
+    case "SET_PLAN":
+      return { ...state, plan: action.plan };
+    case "TOGGLE_YEARLY":
+      return { ...state, yearly: !state.yearly };
     case "NEXT_STEP":
       return { ...state, step: state.step + 1 };
     case "PREV_STEP":
