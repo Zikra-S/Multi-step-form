@@ -2,6 +2,16 @@ import { useContext } from "react";
 import { FormContext } from "../context/formContext";
 import type { Errors } from "../context/formContext";
 
+const fields: {
+  name: "name" | "email" | "phone";
+  label: string;
+  placeholder: string;
+}[] = [
+  { name: "name", label: "Name", placeholder: "e.g. Stephen King" },
+  { name: "email", label: "Email Address", placeholder: "e.g. stephenking@lorem.com" },
+  { name: "phone", label: "Phone Number", placeholder: "e.g. +1 234 567 890" },
+];
+
 function StepOne() {
   const { state, dispatch } = useContext(FormContext);
 
@@ -27,43 +37,41 @@ function StepOne() {
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold">Personal info</h1>
-      <p className="mb-6">Please provide your name, email address, and phone number.</p>
+    <div className="flex h-full flex-col px-6 py-8 md:px-0 md:py-10">
+      <h1 className="text-2xl font-bold text-blue-950 md:text-3xl">Personal info</h1>
+      <p className="mb-6 mt-2 text-grey-500 md:mb-8">Please provide your name, email address, and phone number.</p>
 
-      <label htmlFor="name">Name</label>
-      <input
-        id="name"
-        className="mb-1 block w-full border p-2"
-        placeholder="e.g. Stephen King"
-        value={state.name}
-        onChange={(e) => dispatch({ type: "SET_FIELD", field: "name", value: e.target.value })}
-      />
-      <p className="mb-4 text-sm text-red-500">{state.errors.name}</p>
+      {fields.map((field) => {
+        const error = state.errors[field.name];
 
-      <label htmlFor="email">Email Address</label>
-      <input
-        id="email"
-        className="mb-1 block w-full border p-2"
-        placeholder="e.g. stephenking@lorem.com"
-        value={state.email}
-        onChange={(e) => dispatch({ type: "SET_FIELD", field: "email", value: e.target.value })}
-      />
-      <p className="mb-4 text-sm text-red-500">{state.errors.email}</p>
+        return (
+          <div key={field.name} className="mb-4 md:mb-6">
+            <div className="mb-1 flex items-center justify-between">
+              <label htmlFor={field.name} className="text-sm text-blue-950">
+                {field.label}
+              </label>
+              {error && <p className="text-sm font-bold text-red-500">{error}</p>}
+            </div>
 
-      <label htmlFor="phone">Phone Number</label>
-      <input
-        id="phone"
-        className="mb-1 block w-full border p-2"
-        placeholder="e.g. +1 234 567 890"
-        value={state.phone}
-        onChange={(e) => dispatch({ type: "SET_FIELD", field: "phone", value: e.target.value })}
-      />
-      <p className="mb-6 text-sm text-red-500">{state.errors.phone}</p>
+            <input
+              id={field.name}
+              value={state[field.name]}
+              placeholder={field.placeholder}
+              aria-invalid={error !== ""}
+              onChange={(e) => dispatch({ type: "SET_FIELD", field: field.name, value: e.target.value })}
+              className={`w-full rounded-lg border px-4 py-3 font-medium text-blue-950 outline-none placeholder:text-grey-500 focus:border-purple-600 ${
+                error ? "border-red-500" : "border-purple-200"
+              }`}
+            />
+          </div>
+        );
+      })}
 
-      <button onClick={handleNext} className="rounded bg-blue-900 px-4 py-2 text-white">
-        Next Step
-      </button>
+      <div className="mt-8 flex justify-end md:mt-auto">
+        <button onClick={handleNext} className="cursor-pointer rounded-lg bg-blue-950 px-6 py-3 font-medium text-white hover:bg-blue-950/80">
+          Next Step
+        </button>
+      </div>
     </div>
   );
 }
